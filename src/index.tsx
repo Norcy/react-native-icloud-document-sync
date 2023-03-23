@@ -1,9 +1,10 @@
 import { NativeModules } from 'react-native';
 
-type IcloudDocumentSyncType = {
-  multiply(a: number, b: number): Promise<number>;
+type CloudStorage = {
+  isCloudAvailable(): Promise<boolean>;
+  uploadFile(file: string): Promise<string>;
 };
 
-const { IcloudDocumentSync } = NativeModules;
+const { RNCloudStorage } = NativeModules;
 
-export default IcloudDocumentSync as IcloudDocumentSyncType;
+export default RNCloudStorage as CloudStorage;
