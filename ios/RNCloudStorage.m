@@ -34,12 +34,12 @@
 
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(isCloudAvailable)
+RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(isCloudAvailable)
 {
     BOOL cloudIsAvailable = [[iCloud sharedCloud] checkCloudAvailability];
     BOOL cloudContainerIsAvailable = [[iCloud sharedCloud] checkCloudUbiquityContainer];
     BOOL ret = cloudIsAvailable && cloudContainerIsAvailable;
-    return ret;
+    return @(ret);
 }
 
 RCT_EXPORT_METHOD(uploadFile:(NSDictionary *)options
@@ -51,7 +51,7 @@ RCT_EXPORT_METHOD(uploadFile:(NSDictionary *)options
     
     [[iCloud sharedCloud] saveAndCloseDocumentWithName:targetPath withContent:[content dataUsingEncoding:NSUTF8StringEncoding] completion:^(UIDocument *cloudDocument, NSData *documentData, NSError *error) {
         if (error == nil) {
-            return resolve();
+            return resolve(nil);
         } else {
             return reject(@"error", error.description, nil);
         }
@@ -103,18 +103,18 @@ RCT_EXPORT_METHOD(deleteFile:(NSDictionary *)options
         if (error) {
             return reject(@"Unknown Error", error.description, nil);
         } else {
-            return resolve();
+            return resolve(nil);
         }
     }];
 }
 
-RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(isFileExist:(NSDictionary *)options
+RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(isFileExist:(NSDictionary *)options
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
     NSString *targetPath = [options objectForKey:@"targetPath"];
     BOOL fileExists = [[iCloud sharedCloud] doesFileExistInCloud:targetPath];
-    return fileExists;
+    return @(fileExists);
 }
 
 RCT_EXPORT_METHOD(renameFile:(NSDictionary *)options
@@ -136,7 +136,7 @@ RCT_EXPORT_METHOD(renameFile:(NSDictionary *)options
         if (error) {
             return reject(@"Unknown Error", error.description, nil);
         } else {
-            return resolve();
+            return resolve(nil);
         }
     }];
 }
