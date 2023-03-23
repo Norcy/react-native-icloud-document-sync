@@ -1,0 +1,6 @@
+rootProject.name = 'IcloudDocumentSyncExample'
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':app'
+
+include ':reactnativeiclouddocumentsync'
+project(':reactnativeiclouddocumentsync').projectDir = new File(rootProject.projectDir, '../../android')
