@@ -1,19 +1,16 @@
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import IcloudDocumentSync from 'react-native-icloud-document-sync';
+import { StyleSheet, View } from 'react-native';
+import CloudStorage from 'react-native-icloud-document-sync';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
   React.useEffect(() => {
-    IcloudDocumentSync.multiply(3, 7).then(setResult);
+    (async () => {
+      const isCloudAvailable = await CloudStorage.isCloudAvailable();
+      console.log('isCloudAvailable', isCloudAvailable);
+    })();
   }, []);
 
-  return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
-  );
+  return <View style={styles.container} />;
 }
 
 const styles = StyleSheet.create({
