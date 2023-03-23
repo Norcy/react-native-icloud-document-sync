@@ -34,15 +34,12 @@
 
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(isCloudAvailable:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(isCloudAvailable)
 {
     BOOL cloudIsAvailable = [[iCloud sharedCloud] checkCloudAvailability];
     BOOL cloudContainerIsAvailable = [[iCloud sharedCloud] checkCloudUbiquityContainer];
     BOOL ret = cloudIsAvailable && cloudContainerIsAvailable;
-    if (callback)
-    {
-        callback(@[@(ret)]);
-    }
+    return ret;
 }
 
 RCT_EXPORT_METHOD(uploadFile:(NSDictionary *)options
@@ -54,7 +51,7 @@ RCT_EXPORT_METHOD(uploadFile:(NSDictionary *)options
     
     [[iCloud sharedCloud] saveAndCloseDocumentWithName:targetPath withContent:[content dataUsingEncoding:NSUTF8StringEncoding] completion:^(UIDocument *cloudDocument, NSData *documentData, NSError *error) {
         if (error == nil) {
-            return resolve(@"success");
+            return resolve();
         } else {
             return reject(@"error", error.description, nil);
         }
@@ -106,18 +103,18 @@ RCT_EXPORT_METHOD(deleteFile:(NSDictionary *)options
         if (error) {
             return reject(@"Unknown Error", error.description, nil);
         } else {
-            return resolve(@"Success");
+            return resolve();
         }
     }];
 }
 
-RCT_EXPORT_METHOD(isFileExist:(NSDictionary *)options
+RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(isFileExist:(NSDictionary *)options
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
     NSString *targetPath = [options objectForKey:@"targetPath"];
     BOOL fileExists = [[iCloud sharedCloud] doesFileExistInCloud:targetPath];
-    return resolve(@(fileExists));
+    return fileExists;
 }
 
 RCT_EXPORT_METHOD(renameFile:(NSDictionary *)options
@@ -139,7 +136,7 @@ RCT_EXPORT_METHOD(renameFile:(NSDictionary *)options
         if (error) {
             return reject(@"Unknown Error", error.description, nil);
         } else {
-            return resolve(@"Success");
+            return resolve();
         }
     }];
 }
