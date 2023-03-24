@@ -10,7 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RNCloudStorage : NSObject <RCTBridgeModule>
-
++ (void)initCloud:(NSString *)containerID;
 @end
 
 NS_ASSUME_NONNULL_END

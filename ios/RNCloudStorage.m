@@ -17,11 +17,16 @@
     return dispatch_queue_create("RNCloudFs.queue", DISPATCH_QUEUE_SERIAL);
 }
 
++ (void)initCloud:(NSString *)containerID
+{
+    [[iCloud sharedCloud] setupiCloudDocumentSyncWithUbiquityContainer:containerID];
+}
+
 - (instancetype)init
 {
     if (self = [super init])
     {
-        [[iCloud sharedCloud] setupiCloudDocumentSyncWithUbiquityContainer:nil];
+        // [[iCloud sharedCloud] setVerboseLogging:YES];
     }
     return self;
 }

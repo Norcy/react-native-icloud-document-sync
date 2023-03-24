@@ -6,16 +6,22 @@ A react-native module for icloud document storage and management, based on iClou
 
 ```sh
 npm install react-native-icloud-document-sync
+# or
+yarn add react-native-icloud-document-sync
+```
+
+## Config
+```objc
+
 ```
 
 ## Usage
 
 ```js
-import IcloudDocumentSync from "react-native-icloud-document-sync";
+import CloudStorage from "react-native-icloud-document-sync";
 
 // ...
 
-const result = await IcloudDocumentSync.multiply(3, 7);
 ```
 
 ## Contributing
