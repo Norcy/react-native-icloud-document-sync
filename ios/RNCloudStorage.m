@@ -34,12 +34,13 @@
 
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(isCloudAvailable)
+RCT_EXPORT_METHOD(isCloudAvailable:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
 {
     BOOL cloudIsAvailable = [[iCloud sharedCloud] checkCloudAvailability];
     BOOL cloudContainerIsAvailable = [[iCloud sharedCloud] checkCloudUbiquityContainer];
     BOOL ret = cloudIsAvailable && cloudContainerIsAvailable;
-    return @(ret);
+    return resolve(@(ret));
 }
 
 RCT_EXPORT_METHOD(uploadFile:(NSDictionary *)options
@@ -108,13 +109,13 @@ RCT_EXPORT_METHOD(deleteFile:(NSDictionary *)options
     }];
 }
 
-RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(isFileExist:(NSDictionary *)options
+RCT_EXPORT_METHOD(isFileExist:(NSDictionary *)options
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
     NSString *targetPath = [options objectForKey:@"targetPath"];
     BOOL fileExists = [[iCloud sharedCloud] doesFileExistInCloud:targetPath];
-    return @(fileExists);
+    return resolve(@(fileExists));
 }
 
 RCT_EXPORT_METHOD(renameFile:(NSDictionary *)options
