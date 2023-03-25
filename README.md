@@ -1,6 +1,6 @@
 # react-native-icloud-document-sync
 
-A react-native module for icloud document storage and management, based on iCloudDocumentSync
+A react-native module for icloud document storage and management, based on [iCloudDocumentSync](https://github.com/nenosllc/iCloudDocumentSync)
 
 ## Installation
 
