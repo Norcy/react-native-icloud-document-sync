@@ -87,10 +87,15 @@ RCT_EXPORT_METHOD(listFiles:(NSDictionary *)options
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
+    BOOL includeSize = [options[@"includeSize"] boolValue];
     NSArray<NSURL *> *files = [[iCloud sharedCloud] listCloudFiles];
-    NSMutableArray<NSString *> *fileNames = @[].mutableCopy;
+    NSMutableArray<NSDictionary *> *fileNames = @[].mutableCopy;
     for (NSURL *url in files) {
-        [fileNames addObject:url.lastPathComponent];
+        NSMutableDictionary *result = @{@"url": url.absoluteString, @"filename": url.lastPathComponent}.mutableCopy;
+        if (includeSize) {
+            [result setObject:[[iCloud sharedCloud] fileSize:url.lastPathComponent]?:@(0) forKey:@"size"];
+        }
+        [fileNames addObject:result];
     }
     return resolve(fileNames);
 }
