@@ -1,6 +1,6 @@
 {
   "name": "react-native-icloud-document-sync",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A react-native module for icloud document storage and management, based on iCloudDocumentSync",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

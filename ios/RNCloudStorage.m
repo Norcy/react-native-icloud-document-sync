@@ -91,7 +91,7 @@ RCT_EXPORT_METHOD(listFiles:(NSDictionary *)options
     NSArray<NSURL *> *files = [[iCloud sharedCloud] listCloudFiles];
     NSMutableArray<NSDictionary *> *fileNames = @[].mutableCopy;
     for (NSURL *url in files) {
-        NSMutableDictionary *result = @{@"url": url.absoluteString, @"filename": url.lastPathComponent}.mutableCopy;
+        NSMutableDictionary *result = @{@"url": url.absoluteString, @"fileName": url.lastPathComponent}.mutableCopy;
         if (includeSize) {
             [result setObject:[[iCloud sharedCloud] fileSize:url.lastPathComponent]?:@(0) forKey:@"size"];
         }
