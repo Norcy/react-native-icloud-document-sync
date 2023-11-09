@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-// import CloudStorage from 'react-native-icloud-document-sync';
+import CloudStorage from 'react-native-icloud-document-sync';
 
 export default function App() {
   React.useEffect(() => {
     (async () => {
-      // const isCloudAvailable = await CloudStorage.isCloudAvailable();
-      // console.log('isCloudAvailable', isCloudAvailable);
+      const isCloudAvailable = await CloudStorage.isCloudAvailable();
+      console.log('isCloudAvailable', isCloudAvailable);
     })();
   }, []);
 

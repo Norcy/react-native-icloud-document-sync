@@ -4,6 +4,7 @@
   "description": "A react-native module for icloud document storage and management, based on iCloudDocumentSync",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
   "react-native": "src/index",
   "source": "src/index",
   "files": [
