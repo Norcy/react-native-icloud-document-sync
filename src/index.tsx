@@ -13,7 +13,7 @@ interface ListOptions {
 interface FileObject {
   url: string;
   name: string;
-  size?: string;
+  size?: number;
 }
 
 type CloudStorage = {
