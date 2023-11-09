@@ -3,15 +3,27 @@ import { NativeModules } from 'react-native';
 interface FileOptions {
   targetPath: string;
   content?: string;
+  newName?: string;
+}
+
+interface ListOptions {
+  includeSize?: boolean;
+}
+
+interface FileObject {
+  url: string;
+  name: string;
+  size?: string;
 }
 
 type CloudStorage = {
-  isCloudAvailable(): boolean;
+  isCloudAvailable(): Promise<boolean>;
   uploadFile(file: FileOptions): Promise<void>;
   downloadFile(file: FileOptions): Promise<string>;
-  listFiles(): Promise<Array<string>>;
+  listFiles(options?: ListOptions): Promise<Array<FileObject>>;
   deleteFile(file: FileOptions): Promise<void>;
-  isFileExist(file: FileOptions): boolean;
+  isFileExist(file: FileOptions): Promise<boolean>;
+  renameFile(file: FileOptions): Promise<void>;
 };
 
 const { RNCloudStorage } = NativeModules;
