@@ -48,6 +48,21 @@ RCT_EXPORT_METHOD(isCloudAvailable:(RCTPromiseResolveBlock)resolve
     return resolve(@(ret));
 }
 
+RCT_EXPORT_METHOD(mkdir:(NSDictionary *)options
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject)
+{
+    NSString *targetPath = [options objectForKey:@"targetPath"];
+    
+    [[iCloud sharedCloud] createDirectory:targetPath completion:^(NSError *error) {
+      if (error == nil) {
+          return resolve(nil);
+      } else {
+          return reject(@"error", error.description, nil);
+      }
+    }];
+}
+
 RCT_EXPORT_METHOD(uploadFile:(NSDictionary *)options
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
@@ -87,13 +102,14 @@ RCT_EXPORT_METHOD(listFiles:(NSDictionary *)options
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
+    NSString *targetPath = [options objectForKey:@"targetPath"];
     BOOL includeSize = [options[@"includeSize"] boolValue];
-    NSArray<NSURL *> *files = [[iCloud sharedCloud] listCloudFiles];
+    NSArray<NSURL *> *files = [[iCloud sharedCloud] listCloudFiles:targetPath];
     NSMutableArray<NSDictionary *> *fileNames = @[].mutableCopy;
     for (NSURL *url in files) {
         NSMutableDictionary *result = @{@"url": url.absoluteString, @"name": url.lastPathComponent}.mutableCopy;
         if (includeSize) {
-            [result setObject:[[iCloud sharedCloud] fileSize:url.lastPathComponent]?:@(0) forKey:@"size"];
+          [result setObject:[[iCloud sharedCloud] fileSize:url.absoluteString]?:@(0) forKey:@"size"];
         }
         [fileNames addObject:result];
     }
