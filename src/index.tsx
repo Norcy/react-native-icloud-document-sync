@@ -24,6 +24,7 @@ type CloudStorage = {
   deleteFile(file: FileOptions): Promise<void>;
   isFileExist(file: FileOptions): Promise<boolean>;
   renameFile(file: FileOptions): Promise<void>;
+  mkdir(options: FileOptions): Promise<void>;
 };
 
 const { RNCloudStorage } = NativeModules;
