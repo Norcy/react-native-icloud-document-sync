@@ -8,6 +8,7 @@ interface FileOptions {
 
 interface ListOptions {
   includeSize?: boolean;
+  targetPath?: string;
 }
 
 interface FileObject {
